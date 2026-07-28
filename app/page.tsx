@@ -1,121 +1,86 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white px-5 py-10">
+    <main className="min-h-screen overflow-hidden bg-gradient-to-b from-black via-zinc-950 to-black text-white flex items-center justify-center px-6">
 
-      <section className="max-w-md mx-auto text-center">
+      <div className="w-full max-w-md text-center">
 
-        {/* Logo Alanı */}
-        <div className="mb-8">
-          <h1 className="text-5xl font-black">
-            Wrap<span className="text-orange-500">Up</span>
+        {/* Marka Alanı */}
+        <div className="mb-14">
+
+          <div className="inline-block mb-5 px-5 py-2 rounded-full border border-orange-500/30 bg-orange-500/10">
+            <span className="text-orange-400 text-sm tracking-widest">
+              PREMIUM WRAP EXPERIENCE
+            </span>
+          </div>
+
+
+          <h1 className="text-5xl font-black tracking-tight">
+            <span className="text-orange-500">
+              WRAPUP
+            </span>
+            <br />
+            CHICKEN
           </h1>
 
-          <p className="text-orange-500 text-xl font-bold">
-            CHICKEN
+
+          <p className="mt-5 text-gray-400 text-lg">
+            Sıcacık Tavuk Wrap Keyfi
           </p>
 
-          <p className="text-gray-400 mt-3">
-            Özel soslu tavuk wrap deneyimi
-          </p>
-        </div>
-
-
-        {/* Ürün Kartı */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden mb-8">
-
-          <div className="h-56 bg-gradient-to-br from-orange-500/30 to-black flex items-center justify-center">
-
-            <span className="text-7xl">
-              🌯
-            </span>
-
-          </div>
-
-
-          <div className="p-5 text-left">
-
-            <h2 className="text-2xl font-bold">
-              Bol Cheddarlı Tavuk Wrap
-            </h2>
-
-            <p className="text-gray-400 mt-2 text-sm">
-              Izgara tavuk, özel WrapUp sosu,
-              cheddar ve taze malzemeler.
-            </p>
-
-
-            <div className="mt-4 text-orange-500 font-bold text-xl">
-              Favori lezzetin burada 🔥
-            </div>
-
-          </div>
-
         </div>
 
 
 
-        {/* Sipariş Alanı */}
-
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
-
-          <h2 className="text-2xl font-bold mb-2">
-            Hemen Sipariş Ver
-          </h2>
-
-          <p className="text-gray-400 text-sm mb-6">
-            Dilediğin platformdan sipariş oluştur.
-          </p>
+        {/* Sipariş Butonları */}
+        <div className="space-y-4">
 
 
-          <div className="space-y-4">
-
-            <a
-              href="#"
-              className="block bg-orange-500 text-black font-bold py-4 rounded-2xl"
-            >
-              🟠 Trendyol GO
-            </a>
-
-
-            <a
-              href="#"
-              className="block bg-red-600 font-bold py-4 rounded-2xl"
-            >
-              🔴 Yemeksepeti
-            </a>
+          <a
+            href="https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler"
+            target="_blank"
+            className="block w-full rounded-2xl py-5 bg-orange-500 text-black font-bold text-lg shadow-xl hover:scale-105 transition"
+          >
+            🟠 Trendyol GO'dan Sipariş Ver
+          </a>
 
 
-            <a
-              href="#"
-              className="block bg-green-600 font-bold py-4 rounded-2xl"
-            >
-              🟢 Migros Yemek
-            </a>
+          <a
+            href="https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl"
+            target="_blank"
+            className="block w-full rounded-2xl py-5 bg-red-600 text-white font-bold text-lg shadow-xl hover:scale-105 transition"
+          >
+            🔴 Yemeksepeti'nden Sipariş Ver
+          </a>
 
 
-            <a
-              href="#"
-              className="block border border-orange-500 text-orange-400 font-bold py-4 rounded-2xl"
-            >
-              💬 WhatsApp Sipariş
-            </a>
+          <a
+            href="https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5"
+            target="_blank"
+            className="block w-full rounded-2xl py-5 bg-green-600 text-white font-bold text-lg shadow-xl hover:scale-105 transition"
+          >
+            🟢 Migros Yemek'ten Sipariş Ver
+          </a>
 
-          </div>
+
+          <a
+            href="https://wa.me/905325192920?text=Merhaba,%20sipariş%20vermek%20istiyorum"
+            target="_blank"
+            className="block w-full rounded-2xl py-5 bg-white text-black font-bold text-lg shadow-xl hover:scale-105 transition"
+          >
+            💬 WhatsApp Sipariş
+          </a>
+
 
         </div>
 
 
 
-        <div className="mt-8 text-gray-500 text-sm space-y-2">
-
-          <p>🚀 30 Dakikada Sıcak Teslimat</p>
-          <p>📍 İzmir Karşıyaka</p>
-          <p>📸 @wrapupchicken</p>
-
-        </div>
+        <p className="mt-14 text-xs text-zinc-600">
+          WrapUp Chicken © 2026
+        </p>
 
 
-      </section>
+      </div>
 
     </main>
   );
