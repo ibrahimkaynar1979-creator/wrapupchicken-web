@@ -31,7 +31,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
 
-        {/* Google Analytics */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-NMPPKWJ55E"
@@ -42,7 +41,6 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
             gtag('config', 'G-NMPPKWJ55E');
           `}
         </Script>
