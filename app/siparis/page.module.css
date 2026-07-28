@@ -1,0 +1,229 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  display: block;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  position: relative;
+  width: 100vw;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+  line-height: 0;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.clickArea {
+  position: absolute;
+  z-index: 20;
+  display: block;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Sağ üst Siparişim */
+.myOrder {
+  top: 1%;
+  left: 85%;
+  width: 14%;
+  height: 7%;
+}
+
+/* Sipariş Platformunu Seç */
+.selectPlatform {
+  top: 53.2%;
+  left: 25%;
+  width: 50%;
+  height: 4.5%;
+}
+
+/* Kaydırma hedefi */
+.platformMarker {
+  position: absolute;
+  top: 58.2%;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-margin-top: 8px;
+}
+
+/* Platform kartları */
+.platformButton {
+  --neon-color: #ff7a00;
+  --neon-soft: rgba(255, 122, 0, 0.5);
+
+  overflow: hidden;
+  border: none;
+  outline: none;
+  border-radius: 19px;
+  background: transparent;
+  box-shadow: none;
+
+  transition:
+    transform 0.18s ease,
+    filter 0.2s ease;
+}
+
+/* Tek dönen neon şerit */
+.platformButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0deg,
+    transparent 258deg,
+    var(--neon-color) 282deg,
+    #ffffff 302deg,
+    var(--neon-color) 322deg,
+    transparent 348deg,
+    transparent 360deg
+  );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  mask-composite: exclude;
+
+  animation: neonBorderTurn 2.6s linear infinite;
+  pointer-events: none;
+}
+
+/* Hafif cam parlaklığı */
+.platformButton::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 15px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.018) 22%,
+    transparent 45%
+  );
+
+  pointer-events: none;
+}
+
+.platformButton:hover {
+  transform: translateY(-2px);
+
+  filter:
+    drop-shadow(0 0 4px var(--neon-soft))
+    drop-shadow(0 0 8px var(--neon-soft));
+}
+
+.platformButton:active {
+  transform: scale(0.97);
+}
+
+/* Trendyol GO */
+.trendyol {
+  --neon-color: #ff7a00;
+  --neon-soft: rgba(255, 122, 0, 0.55);
+
+  top: 63%;
+  left: 5.4%;
+  width: 43.4%;
+  height: 8.5%;
+}
+
+/* Yemeksepeti */
+.yemeksepeti {
+  --neon-color: #ff2f73;
+  --neon-soft: rgba(255, 47, 115, 0.55);
+
+  top: 63%;
+  left: 51.2%;
+  width: 43.4%;
+  height: 8.5%;
+}
+
+/* Migros Yemek */
+.migros {
+  --neon-color: #ff5a1f;
+  --neon-soft: rgba(255, 90, 31, 0.55);
+
+  top: 72.3%;
+  left: 5.4%;
+  width: 43.4%;
+  height: 8.5%;
+}
+
+/* WhatsApp */
+.whatsapp {
+  --neon-color: #22d86b;
+  --neon-soft: rgba(34, 216, 107, 0.55);
+
+  top: 72.3%;
+  left: 51.2%;
+  width: 43.4%;
+  height: 8.5%;
+}
+
+.clickArea:focus-visible {
+  outline: 2px solid var(--neon-color, #ff7a00);
+  outline-offset: -2px;
+  border-radius: 19px;
+}
+
+@property --neon-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes neonBorderTurn {
+  from {
+    --neon-angle: 0deg;
+  }
+
+  to {
+    --neon-angle: 360deg;
+  }
+}
+
+@media (max-width: 430px) {
+  .wrapper {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platformButton::before {
+    animation: none;
+  }
+}

@@ -1,0 +1,63 @@
+.page {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 734px;
+  margin: 0 auto;
+  background: #000;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  position: absolute;
+  z-index: 10;
+  display: block;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.trendyol {
+  top: 63%;
+  left: 5%;
+  width: 44%;
+  height: 8.7%;
+}
+
+.yemeksepeti {
+  top: 63%;
+  left: 51%;
+  width: 44%;
+  height: 8.7%;
+}
+
+.migros {
+  top: 72.4%;
+  left: 5%;
+  width: 44%;
+  height: 8.7%;
+}
+
+.whatsapp {
+  top: 72.4%;
+  left: 51%;
+  width: 44%;
+  height: 8.7%;
+}
