@@ -1,4 +1,17 @@
+"use client";
+
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export default function Home() {
+
+  const trackClick = (eventName: string) => {
+    window.gtag?.("event", eventName);
+  };
+
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-b from-black via-zinc-950 to-black text-white flex items-center justify-center px-6">
 
@@ -38,6 +51,7 @@ export default function Home() {
           <a
             href="https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler"
             target="_blank"
+            onClick={() => trackClick("trendyol_click")}
             className="block w-full rounded-2xl py-5 bg-orange-500 text-black font-bold text-lg shadow-xl hover:scale-105 transition"
           >
             🟠 Trendyol GO'dan Sipariş Ver
@@ -47,6 +61,7 @@ export default function Home() {
           <a
             href="https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl"
             target="_blank"
+            onClick={() => trackClick("yemeksepeti_click")}
             className="block w-full rounded-2xl py-5 bg-red-600 text-white font-bold text-lg shadow-xl hover:scale-105 transition"
           >
             🔴 Yemeksepeti'nden Sipariş Ver
@@ -56,6 +71,7 @@ export default function Home() {
           <a
             href="https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5"
             target="_blank"
+            onClick={() => trackClick("migros_click")}
             className="block w-full rounded-2xl py-5 bg-green-600 text-white font-bold text-lg shadow-xl hover:scale-105 transition"
           >
             🟢 Migros Yemek'ten Sipariş Ver
@@ -65,6 +81,7 @@ export default function Home() {
           <a
             href="https://wa.me/905325192920?text=Merhaba,%20sipariş%20vermek%20istiyorum"
             target="_blank"
+            onClick={() => trackClick("whatsapp_click")}
             className="block w-full rounded-2xl py-5 bg-white text-black font-bold text-lg shadow-xl hover:scale-105 transition"
           >
             💬 WhatsApp Sipariş
