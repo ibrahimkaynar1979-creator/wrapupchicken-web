@@ -16,13 +16,10 @@ declare global {
 const platformLinks = {
   trendyol:
     "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
-
   yemeksepeti:
     "https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl",
-
   migros:
     "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
-
   whatsapp:
     "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
 };
@@ -58,10 +55,7 @@ export default function SiparisPage() {
           aria-label="Sipariş platformlarını görüntüle"
         />
 
-        <span
-          id="platformlar"
-          className={styles.platformMarker}
-        />
+        <span id="platformlar" className={styles.platformMarker} />
 
         <a
           href={platformLinks.trendyol}

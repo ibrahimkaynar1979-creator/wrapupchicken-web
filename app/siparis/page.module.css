@@ -65,7 +65,6 @@
 
 .platformButton {
   --neon-color: #ff7a00;
-
   overflow: visible;
   border-radius: 19px;
   transition:
@@ -83,48 +82,6 @@
   pointer-events: none;
 }
 
-/* SVG içindeki sınıflar */
-.neonBorder :global(.neonBase),
-.neonBorder :global(.neonRunner),
-.neonBorder :global(.neonSpark) {
-  fill: none;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.neonBorder :global(.neonBase) {
-  stroke: var(--neon-color);
-  stroke-width: 1.1;
-  opacity: 0.25;
-}
-
-.neonBorder :global(.neonRunner) {
-  stroke: var(--neon-color);
-  stroke-width: 2.2;
-  stroke-dasharray: 18 82;
-  stroke-dashoffset: 0;
-
-  filter:
-    drop-shadow(0 0 2px var(--neon-color))
-    drop-shadow(0 0 5px var(--neon-color));
-
-  animation: neonRun 2.6s linear infinite;
-}
-
-.neonBorder :global(.neonSpark) {
-  stroke: #fff;
-  stroke-width: 1.4;
-  stroke-dasharray: 3 97;
-  stroke-dashoffset: -7;
-
-  filter:
-    drop-shadow(0 0 2px #fff)
-    drop-shadow(0 0 4px var(--neon-color));
-
-  animation: neonSparkRun 2.6s linear infinite;
-}
-
 .platformButton:hover {
   transform: translateY(-2px);
   filter: brightness(1.08);
@@ -136,7 +93,6 @@
 
 .trendyol {
   --neon-color: #ff7a00;
-
   top: 63%;
   left: 5.4%;
   width: 43.4%;
@@ -145,7 +101,6 @@
 
 .yemeksepeti {
   --neon-color: #ff2f73;
-
   top: 63%;
   left: 51.2%;
   width: 43.4%;
@@ -154,7 +109,6 @@
 
 .migros {
   --neon-color: #ff5a1f;
-
   top: 72.3%;
   left: 5.4%;
   width: 43.4%;
@@ -163,7 +117,6 @@
 
 .whatsapp {
   --neon-color: #22d86b;
-
   top: 72.3%;
   left: 51.2%;
   width: 43.4%;
@@ -174,26 +127,6 @@
   outline: 2px solid var(--neon-color, #ff7a00);
   outline-offset: 2px;
   border-radius: 19px;
-}
-
-@keyframes neonRun {
-  from {
-    stroke-dashoffset: 0;
-  }
-
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-@keyframes neonSparkRun {
-  from {
-    stroke-dashoffset: -7;
-  }
-
-  to {
-    stroke-dashoffset: -107;
-  }
 }
 
 @media (max-width: 430px) {
