@@ -1,3 +1,8 @@
+Kitaplık
+/
+siparis-page.tsx
+
+
 "use client";
 
 import styles from "./page.module.css";
@@ -15,16 +20,55 @@ declare global {
 const platformLinks = {
   trendyol:
     "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
-
   yemeksepeti:
     "https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl",
-
   migros:
     "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
-
   whatsapp:
     "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
 };
+
+function NeonBorder() {
+  return (
+    <svg
+      className={styles.neonBorder}
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <rect
+        className={styles.neonTrack}
+        x="1"
+        y="1"
+        width="98"
+        height="98"
+        rx="17"
+        ry="17"
+        pathLength="100"
+      />
+      <rect
+        className={styles.neonColor}
+        x="1"
+        y="1"
+        width="98"
+        height="98"
+        rx="17"
+        ry="17"
+        pathLength="100"
+      />
+      <rect
+        className={styles.neonWhite}
+        x="1"
+        y="1"
+        width="98"
+        height="98"
+        rx="17"
+        ry="17"
+        pathLength="100"
+      />
+    </svg>
+  );
+}
 
 export default function SiparisPage() {
   const trackPlatformClick = (platform: string) => {
@@ -66,7 +110,9 @@ export default function SiparisPage() {
           aria-label="Trendyol GO üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.trendyol}`}
           onClick={() => trackPlatformClick("trendyol_go")}
-        />
+        >
+          <NeonBorder />
+        </a>
 
         <a
           href={platformLinks.yemeksepeti}
@@ -75,7 +121,9 @@ export default function SiparisPage() {
           aria-label="Yemeksepeti üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.yemeksepeti}`}
           onClick={() => trackPlatformClick("yemeksepeti")}
-        />
+        >
+          <NeonBorder />
+        </a>
 
         <a
           href={platformLinks.migros}
@@ -84,7 +132,9 @@ export default function SiparisPage() {
           aria-label="Migros Yemek üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.migros}`}
           onClick={() => trackPlatformClick("migros_yemek")}
-        />
+        >
+          <NeonBorder />
+        </a>
 
         <a
           href={platformLinks.whatsapp}
@@ -93,7 +143,9 @@ export default function SiparisPage() {
           aria-label="WhatsApp üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.whatsapp}`}
           onClick={() => trackPlatformClick("whatsapp")}
-        />
+        >
+          <NeonBorder />
+        </a>
       </div>
     </main>
   );
