@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
+import NeonBorder from "./NeonBorder";
 
 declare global {
   interface Window {
@@ -15,84 +16,24 @@ declare global {
 const platformLinks = {
   trendyol:
     "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
+
   yemeksepeti:
     "https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl",
+
   migros:
     "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
+
   whatsapp:
     "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
 };
 
-function NeonBorder() {
-  return (
-    <svg
-      className={styles.neonBorder}
-      viewBox="0 0 200 100"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <rect
-        className={styles.neonBase}
-        x="2"
-        y="2"
-        width="196"
-        height="96"
-        rx="16"
-        ry="16"
-        pathLength="100"
-      />
-
-      <rect
-        className={styles.neonRunner}
-        x="2"
-        y="2"
-        width="196"
-        height="96"
-        rx="16"
-        ry="16"
-        pathLength="100"
-        strokeDasharray="18 82"
-        strokeDashoffset="0"
-      >
-        <animate
-          attributeName="stroke-dashoffset"
-          from="0"
-          to="-100"
-          dur="2.6s"
-          repeatCount="indefinite"
-        />
-      </rect>
-
-      <rect
-        className={styles.neonSpark}
-        x="2"
-        y="2"
-        width="196"
-        height="96"
-        rx="16"
-        ry="16"
-        pathLength="100"
-        strokeDasharray="3 97"
-        strokeDashoffset="-7"
-      >
-        <animate
-          attributeName="stroke-dashoffset"
-          from="-7"
-          to="-107"
-          dur="2.6s"
-          repeatCount="indefinite"
-        />
-      </rect>
-    </svg>
-  );
-}
-
 export default function SiparisPage() {
   const trackPlatformClick = (platform: string) => {
-    window.gtag?.("event", "platform_click", {
-      platform_name: platform,
-    });
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "platform_click", {
+        platform_name: platform,
+      });
+    }
   };
 
   return (
@@ -117,7 +58,10 @@ export default function SiparisPage() {
           aria-label="Sipariş platformlarını görüntüle"
         />
 
-        <span id="platformlar" className={styles.platformMarker} />
+        <span
+          id="platformlar"
+          className={styles.platformMarker}
+        />
 
         <a
           href={platformLinks.trendyol}
@@ -127,7 +71,7 @@ export default function SiparisPage() {
           className={`${styles.clickArea} ${styles.platformButton} ${styles.trendyol}`}
           onClick={() => trackPlatformClick("trendyol_go")}
         >
-          <NeonBorder />
+          <NeonBorder className={styles.neonBorder} />
         </a>
 
         <a
@@ -138,7 +82,7 @@ export default function SiparisPage() {
           className={`${styles.clickArea} ${styles.platformButton} ${styles.yemeksepeti}`}
           onClick={() => trackPlatformClick("yemeksepeti")}
         >
-          <NeonBorder />
+          <NeonBorder className={styles.neonBorder} />
         </a>
 
         <a
@@ -149,7 +93,7 @@ export default function SiparisPage() {
           className={`${styles.clickArea} ${styles.platformButton} ${styles.migros}`}
           onClick={() => trackPlatformClick("migros_yemek")}
         >
-          <NeonBorder />
+          <NeonBorder className={styles.neonBorder} />
         </a>
 
         <a
@@ -160,7 +104,9 @@ export default function SiparisPage() {
           className={`${styles.clickArea} ${styles.platformButton} ${styles.whatsapp}`}
           onClick={() => trackPlatformClick("whatsapp")}
         >
-          <NeonBorder />
+          <NeonBorder className={styles.neonBorder} />
         </a>
       </div>
     </main>
+  );
+}
