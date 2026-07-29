@@ -1,8 +1,3 @@
-Kitaplık
-/
-siparis-page.tsx
-
-
 "use client";
 
 import styles from "./page.module.css";
@@ -32,51 +27,72 @@ function NeonBorder() {
   return (
     <svg
       className={styles.neonBorder}
-      viewBox="0 0 100 100"
+      viewBox="0 0 200 100"
       preserveAspectRatio="none"
       aria-hidden="true"
+      focusable="false"
     >
       <rect
-        className={styles.neonTrack}
-        x="1"
-        y="1"
-        width="98"
-        height="98"
-        rx="17"
-        ry="17"
+        className={styles.neonBase}
+        x="2"
+        y="2"
+        width="196"
+        height="96"
+        rx="16"
+        ry="16"
         pathLength="100"
       />
+
       <rect
-        className={styles.neonColor}
-        x="1"
-        y="1"
-        width="98"
-        height="98"
-        rx="17"
-        ry="17"
+        className={styles.neonRunner}
+        x="2"
+        y="2"
+        width="196"
+        height="96"
+        rx="16"
+        ry="16"
         pathLength="100"
-      />
+        strokeDasharray="18 82"
+        strokeDashoffset="0"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          from="0"
+          to="-100"
+          dur="2.6s"
+          repeatCount="indefinite"
+        />
+      </rect>
+
       <rect
-        className={styles.neonWhite}
-        x="1"
-        y="1"
-        width="98"
-        height="98"
-        rx="17"
-        ry="17"
+        className={styles.neonSpark}
+        x="2"
+        y="2"
+        width="196"
+        height="96"
+        rx="16"
+        ry="16"
         pathLength="100"
-      />
+        strokeDasharray="3 97"
+        strokeDashoffset="-7"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          from="-7"
+          to="-107"
+          dur="2.6s"
+          repeatCount="indefinite"
+        />
+      </rect>
     </svg>
   );
 }
 
 export default function SiparisPage() {
   const trackPlatformClick = (platform: string) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "platform_click", {
-        platform_name: platform,
-      });
-    }
+    window.gtag?.("event", "platform_click", {
+      platform_name: platform,
+    });
   };
 
   return (
@@ -148,5 +164,3 @@ export default function SiparisPage() {
         </a>
       </div>
     </main>
-  );
-}

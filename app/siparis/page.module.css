@@ -1,8 +1,3 @@
-Kitaplık
-/
-siparis-page.module.css
-
-
 .page {
   width: 100%;
   min-height: 100vh;
@@ -70,56 +65,58 @@ siparis-page.module.css
 
 .platformButton {
   --neon-color: #ff7a00;
+
   overflow: visible;
   border-radius: 19px;
-  transition: transform 0.18s ease, filter 0.2s ease;
+  transition:
+    transform 0.18s ease,
+    filter 0.2s ease;
 }
 
 .neonBorder {
   position: absolute;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
   pointer-events: none;
 }
 
-.neonTrack,
-.neonColor,
-.neonWhite {
+.neonBase,
+.neonRunner,
+.neonSpark {
   fill: none;
   vector-effect: non-scaling-stroke;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.neonTrack {
+.neonBase {
   stroke: var(--neon-color);
   stroke-width: 1.15;
-  opacity: 0.22;
+  opacity: 0.28;
 }
 
-.neonColor {
+.neonRunner {
   stroke: var(--neon-color);
   stroke-width: 2.2;
-  stroke-dasharray: 22 78;
-  stroke-dashoffset: 0;
   filter:
     drop-shadow(0 0 2px var(--neon-color))
     drop-shadow(0 0 5px var(--neon-color));
-  animation: neonRun 2.6s linear infinite;
 }
 
-.neonWhite {
+.neonSpark {
   stroke: #fff;
-  stroke-width: 1.25;
-  stroke-dasharray: 4 96;
-  stroke-dashoffset: -9;
-  filter: drop-shadow(0 0 3px #fff);
-  animation: neonRunWhite 2.6s linear infinite;
+  stroke-width: 1.35;
+  filter:
+    drop-shadow(0 0 2px #fff)
+    drop-shadow(0 0 4px var(--neon-color));
 }
 
 .platformButton:hover {
   transform: translateY(-2px);
+  filter: brightness(1.08);
 }
 
 .platformButton:active {
@@ -162,26 +159,6 @@ siparis-page.module.css
   outline: 2px solid var(--neon-color, #ff7a00);
   outline-offset: 2px;
   border-radius: 19px;
-}
-
-@keyframes neonRun {
-  from {
-    stroke-dashoffset: 0;
-  }
-
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-@keyframes neonRunWhite {
-  from {
-    stroke-dashoffset: -9;
-  }
-
-  to {
-    stroke-dashoffset: -109;
-  }
 }
 
 @media (max-width: 430px) {
