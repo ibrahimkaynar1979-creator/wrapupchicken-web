@@ -29,7 +29,6 @@ export default function SiparisPage() {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "platform_click", {
         platform_name: platform,
-        debug_mode: true,
       });
     }
   };
