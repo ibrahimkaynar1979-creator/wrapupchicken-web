@@ -1,47 +1,82 @@
+import Link from "next/link";
 import styles from "./page.module.css";
 
-export default function SiparisPage() {
+export default function HomePage() {
   return (
     <main className={styles.page}>
-      <div className={styles.wrapper}>
-        <img
-          src="/wrapup-siparis.png"
-          alt="WrapUp Chicken sipariş sayfası"
-          className={styles.image}
-        />
+      <section className={styles.hero}>
+        <div className={styles.glow} aria-hidden="true" />
 
-        <a
-          href="https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Trendyol GO üzerinden sipariş ver"
-          className={`${styles.button} ${styles.trendyol}`}
-        />
+        <header className={styles.header}>
+          <Link href="/" className={styles.brand}>
+            <span>WRAP</span>
+            <strong>UP</strong>
+          </Link>
 
-        <a
-          href="https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Yemeksepeti üzerinden sipariş ver"
-          className={`${styles.button} ${styles.yemeksepeti}`}
-        />
+          <Link href="/siparis" className={styles.headerButton}>
+            Sipariş Ver
+          </Link>
+        </header>
 
-        <a
-          href="https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Migros Yemek üzerinden sipariş ver"
-          className={`${styles.button} ${styles.migros}`}
-        />
+        <div className={styles.heroGrid}>
+          <div className={styles.content}>
+            <p className={styles.eyebrow}>WRAPUP CHICKEN WRAPS</p>
 
-        <a
-          href="https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum."
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp üzerinden sipariş ver"
-          className={`${styles.button} ${styles.whatsapp}`}
-        />
-      </div>
+            <h1 className={styles.title}>
+              Lezzeti sar,
+              <span>açlığına son ver.</span>
+            </h1>
+
+            <p className={styles.description}>
+              Taze sote tavuk, özel soslar ve günlük taze malzemelerle
+              hazırlanan doyurucu tavuk wrap deneyimi.
+            </p>
+
+            <div className={styles.actions}>
+              <Link href="/siparis" className={styles.primaryButton}>
+                Sipariş Ver
+                <span aria-hidden="true">→</span>
+              </Link>
+
+              <a href="#neden-wrapup" className={styles.secondaryButton}>
+                Neden WrapUp?
+              </a>
+            </div>
+
+            <div className={styles.features}>
+              <span>Wok tavada sote tavuk</span>
+              <span>Günlük taze malzeme</span>
+              <span>Karşıyaka&apos;ya hızlı teslimat</span>
+            </div>
+          </div>
+
+          <div className={styles.visual}>
+            <div className={styles.imageGlow} aria-hidden="true" />
+
+            <img
+              src="/wrapup-hero.png"
+              alt="Cheddar soslu WrapUp tavuk wrap"
+              className={styles.heroImage}
+            />
+
+            <div className={styles.badge}>
+              <strong>140 g</strong>
+              <span>Sote tavuk</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="neden-wrapup" className={styles.whySection}>
+        <p className={styles.sectionEyebrow}>NEDEN WRAPUP?</p>
+
+        <h2>Her lokmada bol malzeme, güçlü lezzet.</h2>
+
+        <p>
+          Taze sote tavuk, özel soslar ve günlük hazırlanan malzemelerle
+          doyurucu bir wrap deneyimi.
+        </p>
+      </section>
     </main>
   );
 }
