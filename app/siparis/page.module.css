@@ -12,6 +12,7 @@
   width: 100vw;
   max-width: 430px;
   margin: 0 auto;
+  padding: 0;
   overflow: hidden;
   background: #000;
   line-height: 0;
@@ -32,14 +33,19 @@
   position: absolute;
   z-index: 20;
   display: block;
+  margin: 0;
+  padding: 0;
   border: 0;
   outline: 0;
+  appearance: none;
+  -webkit-appearance: none;
   background: transparent;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Sağ üst Siparişim */
 .myOrder {
   top: 1%;
   left: 85%;
@@ -47,6 +53,7 @@
   height: 7%;
 }
 
+/* Sipariş Platformunu Seç */
 .selectPlatform {
   top: 53.2%;
   left: 25%;
@@ -54,6 +61,7 @@
   height: 4.5%;
 }
 
+/* Yumuşak kaydırma hedefi */
 .platformMarker {
   position: absolute;
   top: 58.2%;
@@ -63,15 +71,19 @@
   scroll-margin-top: 8px;
 }
 
+/* Platform kartları */
 .platformButton {
   --neon-color: #ff7a00;
+
   overflow: visible;
   border-radius: 19px;
+
   transition:
     transform 0.18s ease,
     filter 0.2s ease;
 }
 
+/* Sabit neon çerçeve */
 .neonBorder {
   position: absolute;
   inset: 0;
@@ -91,32 +103,40 @@
   transform: scale(0.97);
 }
 
+/* Trendyol GO */
 .trendyol {
   --neon-color: #ff7a00;
+
   top: 63%;
   left: 5.4%;
   width: 43.4%;
   height: 8.5%;
 }
 
+/* Yemeksepeti */
 .yemeksepeti {
   --neon-color: #ff2f73;
+
   top: 63%;
   left: 51.2%;
   width: 43.4%;
   height: 8.5%;
 }
 
+/* Migros Yemek */
 .migros {
   --neon-color: #ff5a1f;
+
   top: 72.3%;
   left: 5.4%;
   width: 43.4%;
   height: 8.5%;
 }
 
+/* WhatsApp */
 .whatsapp {
   --neon-color: #22d86b;
+
   top: 72.3%;
   left: 51.2%;
   width: 43.4%;
