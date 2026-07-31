@@ -20,102 +20,57 @@ type PlatformKey =
   | "whatsapp";
 
 type PlatformConfig = {
-  webUrl: string;
+  url: string;
   analyticsName: string;
-  androidPackage?: string;
-  useDirectLink?: boolean;
 };
 
 const platforms: Record<PlatformKey, PlatformConfig> = {
   trendyol: {
-    webUrl:
+    url:
       "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
     analyticsName: "trendyol_go",
-    androidPackage: "com.trendyol.go",
   },
 
   yemeksepeti: {
-    webUrl: "https://yemek.go.link/ajp2F",
+    url: "https://yemek.go.link/ajp2F",
     analyticsName: "yemeksepeti",
-    useDirectLink: true,
   },
 
+  /*
+    Migros uygulamasında çalışan resmî paylaşım bağlantısını
+    aşağıdaki URL'nin yerine yazmalısın.
+
+    Şimdilik mevcut restoran web bağlantısı bırakıldı.
+  */
   migros: {
-    webUrl:
+    url:
       "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
     analyticsName: "migros_yemek",
-    androidPackage: "com.inomera.sm",
   },
 
   whatsapp: {
-    webUrl:
+    url:
       "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
     analyticsName: "whatsapp",
-    useDirectLink: true,
   },
 };
 
-function createAndroidIntent(
-  webUrl: string,
-  androidPackage: string
-): string {
-  const parsedUrl = new URL(webUrl);
-
-  const destination =
-    `${parsedUrl.host}${parsedUrl.pathname}` +
-    `${parsedUrl.search}${parsedUrl.hash}`;
-
-  return (
-    `intent://${destination}` +
-    `#Intent;` +
-    `scheme=https;` +
-    `package=${androidPackage};` +
-    `S.browser_fallback_url=${encodeURIComponent(webUrl)};` +
-    `end`
-  );
-}
-
 export default function SiparisPage() {
-  const trackPlatformClick = (platform: PlatformConfig) => {
-    window.gtag?.("event", "platform_click", {
-      platform_name: platform.analyticsName,
-    });
-  };
-
   const openPlatform = (platformKey: PlatformKey) => {
     const platform = platforms[platformKey];
 
-    trackPlatformClick(platform);
+    window.gtag?.("event", "platform_click", {
+      platform_name: platform.analyticsName,
+    });
 
     /*
-      Yemeksepeti go.link ve WhatsApp bağlantıları,
-      uygulamaya yönlendirme işini kendi sistemleriyle yapar.
-    */
-    if (platform.useDirectLink) {
-      window.location.href = platform.webUrl;
-      return;
-    }
+      Tüm bağlantılar doğrudan açılır.
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAndroid = userAgent.includes("android");
-
-    /*
-      Trendyol GO ve Migros:
-      Android'de önce uygulamayı açmayı dener.
-      Olmazsa web bağlantısına geçer.
+      Yemeksepeti'nin go.link adresi uygulamayı kendi açar.
+      Trendyol normal web sayfasını güvenilir biçimde açar.
+      Migros'un resmî akıllı paylaşım linki bulunduğunda aynı yere yazılır.
     */
-    if (isAndroid && platform.androidPackage) {
-      window.location.href = createAndroidIntent(
-        platform.webUrl,
-        platform.androidPackage
-      );
-      return;
-    }
-
-    /*
-      iPhone, iPad ve masaüstünde normal HTTPS bağlantısı kullanılır.
-    */
-    window.location.href = platform.webUrl;
+    window.location.href = platform.url;
   };
 
   return (
@@ -128,24 +83,21 @@ export default function SiparisPage() {
           draggable={false}
         />
 
-        {/* Sağ üst Siparişim */}
+        {/* Sağ üst: Siparişim */}
         <a
           href="#platformlar"
           className={`${styles.clickArea} ${styles.myOrder}`}
           aria-label="Sipariş platformlarına git"
         />
 
-        {/* Turuncu Sipariş Platformunu Seç */}
+        {/* Turuncu: Sipariş platformunu seç */}
         <a
           href="#platformlar"
           className={`${styles.clickArea} ${styles.selectPlatform}`}
           aria-label="Sipariş platformlarını görüntüle"
         />
 
-        <span
-          id="platformlar"
-          className={styles.platformMarker}
-        />
+        <span id="platformlar" className={styles.platformMarker} />
 
         {/* Trendyol GO */}
         <button
