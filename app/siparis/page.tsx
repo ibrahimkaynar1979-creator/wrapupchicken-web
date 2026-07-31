@@ -21,36 +21,37 @@ type PlatformKey =
 
 type PlatformConfig = {
   webUrl: string;
-  androidPackage?: string;
   analyticsName: string;
+  androidPackage?: string;
+  useDirectLink?: boolean;
 };
 
 const platforms: Record<PlatformKey, PlatformConfig> = {
   trendyol: {
     webUrl:
       "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
-    androidPackage: "com.trendyol.go",
     analyticsName: "trendyol_go",
+    androidPackage: "com.trendyol.go",
   },
 
   yemeksepeti: {
-    webUrl:
-      "https://www.yemeksepeti.com/restaurant/adwl/wrapup-chicken-wraps-adwl",
-    androidPackage: "com.inovel.app.yemeksepeti",
+    webUrl: "https://yemek.go.link/ajp2F",
     analyticsName: "yemeksepeti",
+    useDirectLink: true,
   },
 
   migros: {
     webUrl:
       "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
-    androidPackage: "com.inomera.sm",
     analyticsName: "migros_yemek",
+    androidPackage: "com.inomera.sm",
   },
 
   whatsapp: {
     webUrl:
       "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
     analyticsName: "whatsapp",
+    useDirectLink: true,
   },
 };
 
@@ -60,12 +61,12 @@ function createAndroidIntent(
 ): string {
   const parsedUrl = new URL(webUrl);
 
-  const path =
+  const destination =
     `${parsedUrl.host}${parsedUrl.pathname}` +
     `${parsedUrl.search}${parsedUrl.hash}`;
 
   return (
-    `intent://${path}` +
+    `intent://${destination}` +
     `#Intent;` +
     `scheme=https;` +
     `package=${androidPackage};` +
@@ -76,11 +77,9 @@ function createAndroidIntent(
 
 export default function SiparisPage() {
   const trackPlatformClick = (platform: PlatformConfig) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "platform_click", {
-        platform_name: platform.analyticsName,
-      });
-    }
+    window.gtag?.("event", "platform_click", {
+      platform_name: platform.analyticsName,
+    });
   };
 
   const openPlatform = (platformKey: PlatformKey) => {
@@ -88,30 +87,33 @@ export default function SiparisPage() {
 
     trackPlatformClick(platform);
 
+    /*
+      Yemeksepeti go.link ve WhatsApp bağlantıları,
+      uygulamaya yönlendirme işini kendi sistemleriyle yapar.
+    */
+    if (platform.useDirectLink) {
+      window.location.href = platform.webUrl;
+      return;
+    }
+
     const userAgent = navigator.userAgent.toLowerCase();
     const isAndroid = userAgent.includes("android");
 
     /*
-      Android:
-      Önce uygulamayı açmayı dener.
-      Uygulama veya bağlantı desteği yoksa web sayfasına geçer.
+      Trendyol GO ve Migros:
+      Android'de önce uygulamayı açmayı dener.
+      Olmazsa web bağlantısına geçer.
     */
     if (isAndroid && platform.androidPackage) {
-      const intentUrl = createAndroidIntent(
+      window.location.href = createAndroidIntent(
         platform.webUrl,
         platform.androidPackage
       );
-
-      window.location.href = intentUrl;
       return;
     }
 
     /*
-      iPhone / iPad / masaüstü:
-      Normal HTTPS bağlantısı kullanılır.
-
-      İlgili uygulama Universal Link destekliyorsa uygulama açılabilir.
-      Instagram bunu engellerse web sayfası açılır.
+      iPhone, iPad ve masaüstünde normal HTTPS bağlantısı kullanılır.
     */
     window.location.href = platform.webUrl;
   };
@@ -148,7 +150,7 @@ export default function SiparisPage() {
         {/* Trendyol GO */}
         <button
           type="button"
-          aria-label="Trendyol GO uygulamasında sipariş ver"
+          aria-label="Trendyol GO üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.trendyol}`}
           onClick={() => openPlatform("trendyol")}
         >
@@ -168,7 +170,7 @@ export default function SiparisPage() {
         {/* Migros Yemek */}
         <button
           type="button"
-          aria-label="Migros uygulamasında sipariş ver"
+          aria-label="Migros Yemek üzerinden sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.migros}`}
           onClick={() => openPlatform("migros")}
         >
