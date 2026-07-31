@@ -13,34 +13,34 @@ export default function NeonBorder({
   const sparkRef = useRef<SVGRectElement | null>(null);
 
   useEffect(() => {
-    let animationFrameId = 0;
-
+    let frameId = 0;
     const duration = 2600;
-    const startTime = performance.now();
+    const start = performance.now();
 
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = (elapsed % duration) / duration;
+    const animate = (time: number) => {
+      const progress = ((time - start) % duration) / duration;
 
       if (runnerRef.current) {
-        runnerRef.current.style.strokeDashoffset = String(
-          -100 * progress
+        runnerRef.current.setAttribute(
+          "stroke-dashoffset",
+          String(-100 * progress)
         );
       }
 
       if (sparkRef.current) {
-        sparkRef.current.style.strokeDashoffset = String(
-          -8 - 100 * progress
+        sparkRef.current.setAttribute(
+          "stroke-dashoffset",
+          String(-8 - 100 * progress)
         );
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(animate);
     };
 
-    animationFrameId = requestAnimationFrame(animate);
+    frameId = requestAnimationFrame(animate);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(frameId);
     };
   }, []);
 
@@ -52,7 +52,6 @@ export default function NeonBorder({
       aria-hidden="true"
       focusable="false"
     >
-      {/* Hafif sabit temel çerçeve */}
       <rect
         x="2"
         y="2"
@@ -63,12 +62,11 @@ export default function NeonBorder({
         pathLength="100"
         fill="none"
         stroke="var(--neon-color)"
-        strokeWidth="1.1"
-        opacity="0.22"
+        strokeWidth="1.2"
+        opacity="0.24"
         vectorEffect="non-scaling-stroke"
       />
 
-      {/* Kart çevresinde dolaşan renkli ışık */}
       <rect
         ref={runnerRef}
         x="2"
@@ -80,7 +78,7 @@ export default function NeonBorder({
         pathLength="100"
         fill="none"
         stroke="var(--neon-color)"
-        strokeWidth="2.3"
+        strokeWidth="2.4"
         strokeDasharray="20 80"
         strokeDashoffset="0"
         strokeLinecap="round"
@@ -92,7 +90,6 @@ export default function NeonBorder({
         }}
       />
 
-      {/* Renkli ışığın önündeki beyaz parlak uç */}
       <rect
         ref={sparkRef}
         x="2"
@@ -104,7 +101,7 @@ export default function NeonBorder({
         pathLength="100"
         fill="none"
         stroke="#ffffff"
-        strokeWidth="1.4"
+        strokeWidth="1.5"
         strokeDasharray="4 96"
         strokeDashoffset="-8"
         strokeLinecap="round"
