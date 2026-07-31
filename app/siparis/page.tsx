@@ -19,114 +19,86 @@ type PlatformKey =
   | "migros"
   | "whatsapp";
 
-type PlatformMode =
-  | "web"
-  | "smart-link"
-  | "android-intent";
+const links = {
+  trendyol:
+    "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
 
-type PlatformConfig = {
-  url: string;
-  analyticsName: string;
-  mode: PlatformMode;
-  androidPackage?: string;
+  yemeksepeti:
+    "https://yemek.go.link/ajp2F",
+
+  migros:
+    "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
+
+  whatsapp:
+    "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
 };
 
-const platforms: Record<PlatformKey, PlatformConfig> = {
-  trendyol: {
-    url:
-      "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
-    analyticsName: "trendyol_go",
-    mode: "web",
-  },
-
-  yemeksepeti: {
-    url: "https://yemek.go.link/ajp2F",
-    analyticsName: "yemeksepeti",
-    mode: "smart-link",
-  },
-
-  migros: {
-    url:
-      "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
-    analyticsName: "migros_yemek",
-    mode: "android-intent",
-    androidPackage: "com.inomera.sm",
-  },
-
-  whatsapp: {
-    url:
-      "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
-    analyticsName: "whatsapp",
-    mode: "smart-link",
-  },
-};
-
-function createAndroidIntent(
-  webUrl: string,
-  androidPackage: string
-): string {
+function createMigrosAndroidIntent(webUrl: string): string {
   const parsedUrl = new URL(webUrl);
 
-  const destination =
+  const path =
     `${parsedUrl.host}${parsedUrl.pathname}` +
     `${parsedUrl.search}${parsedUrl.hash}`;
 
   return (
-    `intent://${destination}` +
+    `intent://${path}` +
     `#Intent;` +
     `scheme=https;` +
-    `package=${androidPackage};` +
+    `package=com.inomera.sm;` +
     `S.browser_fallback_url=${encodeURIComponent(webUrl)};` +
     `end`
   );
 }
 
 export default function SiparisPage() {
-  const trackPlatformClick = (platform: PlatformConfig) => {
+  const trackPlatformClick = (platformName: string) => {
     window.gtag?.("event", "platform_click", {
-      platform_name: platform.analyticsName,
+      platform_name: platformName,
     });
   };
 
-  const openPlatform = (platformKey: PlatformKey) => {
-    const platform = platforms[platformKey];
-
-    trackPlatformClick(platform);
-
+  const openPlatform = (platform: PlatformKey) => {
     const userAgent = navigator.userAgent.toLowerCase();
     const isAndroid = userAgent.includes("android");
 
-    /*
-      Yemeksepeti ve WhatsApp:
-      Kendi akıllı bağlantı sistemleri doğrudan kullanılır.
-    */
-    if (platform.mode === "smart-link") {
-      window.location.href = platform.url;
+    if (platform === "trendyol") {
+      trackPlatformClick("trendyol_go");
+
+      // Trendyol uygulama yönlendirmesi çalışmadığı için
+      // normal restoran web sayfasını açıyoruz.
+      window.location.href = links.trendyol;
       return;
     }
 
-    /*
-      Migros:
-      Android telefonda önce uygulamayı açmayı dener.
-      Uygulama açılmazsa web sayfasına geçer.
-    */
-    if (
-      platform.mode === "android-intent" &&
-      isAndroid &&
-      platform.androidPackage
-    ) {
-      window.location.href = createAndroidIntent(
-        platform.url,
-        platform.androidPackage
-      );
+    if (platform === "yemeksepeti") {
+      trackPlatformClick("yemeksepeti");
+
+      // Yemeksepeti'nin resmî akıllı paylaşım bağlantısı.
+      window.location.href = links.yemeksepeti;
       return;
     }
 
-    /*
-      Trendyol ve diğer durumlar:
-      Normal web bağlantısı açılır.
-    */
-    window.location.href = platform.url;
+    if (platform === "migros") {
+      trackPlatformClick("migros_yemek");
+
+      // Android'de normal Migros restoran linkini
+      // Migros uygulamasında açmayı dener.
+      if (isAndroid) {
+        window.location.href = createMigrosAndroidIntent(
+          links.migros
+        );
+        return;
+      }
+
+      // iPhone, iPad ve masaüstünde normal bağlantı.
+      window.location.href = links.migros;
+      return;
+    }
+
+    if (platform === "whatsapp") {
+      trackPlatformClick("whatsapp");
+      window.location.href = links.whatsapp;
+    }
   };
 
   return (
