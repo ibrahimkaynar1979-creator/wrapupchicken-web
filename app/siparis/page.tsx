@@ -19,9 +19,16 @@ type PlatformKey =
   | "migros"
   | "whatsapp";
 
+type PlatformMode =
+  | "web"
+  | "smart-link"
+  | "android-intent";
+
 type PlatformConfig = {
   url: string;
   analyticsName: string;
+  mode: PlatformMode;
+  androidPackage?: string;
 };
 
 const platforms: Record<PlatformKey, PlatformConfig> = {
@@ -29,46 +36,95 @@ const platforms: Record<PlatformKey, PlatformConfig> = {
     url:
       "https://tgoyemek.com/restoranlar/463004#wraps-tavuk-wrap-ve-durumler",
     analyticsName: "trendyol_go",
+    mode: "web",
   },
 
   yemeksepeti: {
     url: "https://yemek.go.link/ajp2F",
     analyticsName: "yemeksepeti",
+    mode: "smart-link",
   },
 
-  /*
-    Migros uygulamasında çalışan resmî paylaşım bağlantısını
-    aşağıdaki URL'nin yerine yazmalısın.
-
-    Şimdilik mevcut restoran web bağlantısı bırakıldı.
-  */
   migros: {
     url:
       "https://www.migros.com.tr/yemek/wrapup-chicken-wraps-karsiyaka-nergiz-mah-st-361a5",
     analyticsName: "migros_yemek",
+    mode: "android-intent",
+    androidPackage: "com.inomera.sm",
   },
 
   whatsapp: {
     url:
       "https://wa.me/905325192920?text=Merhaba%20WrapUp%20Chicken%2C%20sipariş%20vermek%20istiyorum.",
     analyticsName: "whatsapp",
+    mode: "smart-link",
   },
 };
 
-export default function SiparisPage() {
-  const openPlatform = (platformKey: PlatformKey) => {
-    const platform = platforms[platformKey];
+function createAndroidIntent(
+  webUrl: string,
+  androidPackage: string
+): string {
+  const parsedUrl = new URL(webUrl);
 
+  const destination =
+    `${parsedUrl.host}${parsedUrl.pathname}` +
+    `${parsedUrl.search}${parsedUrl.hash}`;
+
+  return (
+    `intent://${destination}` +
+    `#Intent;` +
+    `scheme=https;` +
+    `package=${androidPackage};` +
+    `S.browser_fallback_url=${encodeURIComponent(webUrl)};` +
+    `end`
+  );
+}
+
+export default function SiparisPage() {
+  const trackPlatformClick = (platform: PlatformConfig) => {
     window.gtag?.("event", "platform_click", {
       platform_name: platform.analyticsName,
     });
+  };
+
+  const openPlatform = (platformKey: PlatformKey) => {
+    const platform = platforms[platformKey];
+
+    trackPlatformClick(platform);
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isAndroid = userAgent.includes("android");
 
     /*
-      Tüm bağlantılar doğrudan açılır.
+      Yemeksepeti ve WhatsApp:
+      Kendi akıllı bağlantı sistemleri doğrudan kullanılır.
+    */
+    if (platform.mode === "smart-link") {
+      window.location.href = platform.url;
+      return;
+    }
 
-      Yemeksepeti'nin go.link adresi uygulamayı kendi açar.
-      Trendyol normal web sayfasını güvenilir biçimde açar.
-      Migros'un resmî akıllı paylaşım linki bulunduğunda aynı yere yazılır.
+    /*
+      Migros:
+      Android telefonda önce uygulamayı açmayı dener.
+      Uygulama açılmazsa web sayfasına geçer.
+    */
+    if (
+      platform.mode === "android-intent" &&
+      isAndroid &&
+      platform.androidPackage
+    ) {
+      window.location.href = createAndroidIntent(
+        platform.url,
+        platform.androidPackage
+      );
+      return;
+    }
+
+    /*
+      Trendyol ve diğer durumlar:
+      Normal web bağlantısı açılır.
     */
     window.location.href = platform.url;
   };
@@ -83,21 +139,24 @@ export default function SiparisPage() {
           draggable={false}
         />
 
-        {/* Sağ üst: Siparişim */}
+        {/* Sağ üst Siparişim */}
         <a
           href="#platformlar"
           className={`${styles.clickArea} ${styles.myOrder}`}
           aria-label="Sipariş platformlarına git"
         />
 
-        {/* Turuncu: Sipariş platformunu seç */}
+        {/* Sipariş platformunu seç */}
         <a
           href="#platformlar"
           className={`${styles.clickArea} ${styles.selectPlatform}`}
           aria-label="Sipariş platformlarını görüntüle"
         />
 
-        <span id="platformlar" className={styles.platformMarker} />
+        <span
+          id="platformlar"
+          className={styles.platformMarker}
+        />
 
         {/* Trendyol GO */}
         <button
@@ -122,7 +181,7 @@ export default function SiparisPage() {
         {/* Migros Yemek */}
         <button
           type="button"
-          aria-label="Migros Yemek üzerinden sipariş ver"
+          aria-label="Migros Yemek uygulamasında sipariş ver"
           className={`${styles.clickArea} ${styles.platformButton} ${styles.migros}`}
           onClick={() => openPlatform("migros")}
         >
